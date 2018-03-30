@@ -185,7 +185,17 @@ var app = new Vue({
 //			console.log(question_no);
 			this.submitData.question_no = question_no;
 			this.submitData.result = results;
-            setTimeout(this.nextQuestion,1000);	/*lx for third*/
+            let obj = document.getElementsByClassName('test_btn')
+            for (let i = 0; i< obj.length; i++) {
+                obj[i].disabled = true
+            }
+            let $this = this
+            setTimeout(function () {
+                for (let i = 0; i< obj.length; i++) {
+                    obj[i].disabled = ''
+                }
+                $this.nextQuestion(index)
+            },500);	/*lx for third*/
 		},
 		nextQuestion:function(){
 			if(this.current < this.num){
