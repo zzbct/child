@@ -28,7 +28,7 @@
 	<div v-for="(item,idx) in data.questionsList" v-if="item.question_no == current">
 	<p class="question">{{item.question_no}}. {{item.title}}</p>
 	<!--<input type="hidden" value="" :id="item.questions_id"/>-->
-	<div style="max-height: 500px; overflow: auto">
+	<div style="max-height: 300px; overflow: auto">
 		<button type="button" @click="bindOption(option.optionId,option.results,item.question_no,idx)" :class="checkCurr[idx] == option.optionId ? 'test_active_option' : ''" class="mui-btn mui-btn-outlined test_btn complate_desc" v-for="(option,index) in item.options">{{index+1}}&emsp;&emsp;{{option.title}}</button>
 	</div>
 
