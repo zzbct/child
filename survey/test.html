@@ -78,7 +78,7 @@ var app = new Vue({
 	    end:1,
 	},
 	
-	created: function () {		
+	mounted: function () {
 		const sn = module.getUrlParam('sn');
 		const scale_id = module.getUrlParam('scale_id');
 		const batch = module.getUrlParam('batch');
@@ -198,24 +198,24 @@ var app = new Vue({
             },500);	/*lx for third*/
 		},
 		nextQuestion:function(){
-			if(this.current < this.num){
-                this.current +=1;
-				this.currentNum += 1;
-				var step = 100 / this.num;
-				var progress = this.currentNum * step +'%';
-				$('.test_num').html(this.current + '/' + this.num);
-				$('#progress_img').css({'left':progress});
-				$('.progress_color').css({'width':progress});			
-			}
-			
-			if(this.current <= this.num){
-				this.end++;
-			}
 			module._post(submitTest,this.submitData,(res)=>{
 				if(res.status == 1){
 					delete this.submitData.result;
 					delete this.submitData.question_no;
 //					console.log(res);
+                    if(this.current < this.num){
+                        this.current +=1;
+                        this.currentNum += 1;
+                        var step = 100 / this.num;
+                        var progress = this.currentNum * step +'%';
+                        $('.test_num').html(this.current + '/' + this.num);
+                        $('#progress_img').css({'left':progress});
+                        $('.progress_color').css({'width':progress});
+                    }
+
+                    if(this.current <= this.num){
+                        this.end++;
+                    }
 					if(this.end > this.num){
 //						console.log(111);
 //						$('#first_btn').hide();
