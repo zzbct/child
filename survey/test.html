@@ -184,11 +184,12 @@ var app = new Vue({
 //			console.log(question_no);
 			this.submitData.question_no = question_no;
 			this.submitData.result = results;
-            setTimeout(this.nextQuestion,1100);	/*lx for third*/
+            setTimeout(this.nextQuestion,1000);	/*lx for third*/
 		},
 		nextQuestion:function(){
 			if(this.current < this.num){
-				this.current +=1;
+                this.checkCurr = null
+                this.current +=1;
 				this.currentNum += 1;
 				var step = 100 / this.num;
 				var progress = this.currentNum * step +'%';
@@ -208,7 +209,7 @@ var app = new Vue({
 					if(this.end > this.num){
 //						console.log(111);
 //						$('#first_btn').hide();
-						//$('#report_btn').show();
+						$('#report_btn').show();
 					}
 				}
 //				console.log(res.msg);
