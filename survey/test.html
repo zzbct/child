@@ -24,12 +24,14 @@
 		</div>
 		<!--<span class="count_time">剩余时间：10:00</span>-->
 	</div>
-	
-	<div v-for="item in data.questionsList" v-if="item.question_no == current">
+
+	<div v-for="(item,idx) in data.questionsList" v-if="item.question_no == current">
 	<p class="question">{{item.question_no}}. {{item.title}}</p>
 	<!--<input type="hidden" value="" :id="item.questions_id"/>-->
-	<button type="button" @click="bindOption(option.optionId,option.results,item.question_no)" :class="checkCurr == option.optionId ? 'test_active_option' : ''" class="mui-btn mui-btn-outlined test_btn complate_desc" v-for="(option,index) in item.options">{{index+1}}&emsp;&emsp;{{option.title}}</button>
-	
+	<div style="max-height: 500px; overflow: auto">
+		<button type="button" @click="bindOption(option.optionId,option.results,item.question_no,idx)" :class="checkCurr[idx] == option.optionId ? 'test_active_option' : ''" class="mui-btn mui-btn-outlined test_btn complate_desc" v-for="(option,index) in item.options">{{index+1}}&emsp;&emsp;{{option.title}}</button>
+	</div>
+
 	<!--<button type="button" class="mui-btn mui-btn-outlined test_btn">01&emsp;&emsp;有一点点</button>
 	<button type="button" class="mui-btn mui-btn-outlined test_btn">01&emsp;&emsp;还算不少</button>
 	<button type="button" class="mui-btn mui-btn-outlined test_btn">01&emsp;&emsp;基本全是</button>-->
@@ -69,7 +71,7 @@ var app = new Vue({
 	    data:[],
 	    maskStatus:true,
 	    current:null,
-	    checkCurr:null,
+	    checkCurr:[],
 	    num:null,
 	    currentNum:1,
 	    submitData:{},
@@ -172,13 +174,12 @@ var app = new Vue({
 			}
 		});
 	},
-	
-    methods: { 
+    methods: {
 		startTest:function(){
 			this.maskStatus = false;
 		},
-		bindOption:function(id,results,question_no){
-			this.checkCurr = id;
+        bindOption:function(id,results,question_no,index){
+            this.$set(this.checkCurr,index,id);
 //			$('#' + this.current).val(results);
 //			const val = $('#' + this.current).val();
 //			console.log(question_no);
@@ -188,7 +189,6 @@ var app = new Vue({
 		},
 		nextQuestion:function(){
 			if(this.current < this.num){
-                this.checkCurr = null
                 this.current +=1;
 				this.currentNum += 1;
 				var step = 100 / this.num;
